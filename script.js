@@ -136,6 +136,7 @@ function initAudio() {
 }
 
 // LOGIKA PEMBUATAN BUTTON MOBILE KEYBOARD CHORD DAN AUTO-RELEASE ENGINE
+// LOGIKA PEMBUATAN BUTTON MOBILE KEYBOARD CHORD + TOGGLE AUTO-RELEASE ENGINE
 function buildMobileKeyboard() {
     if (!mobileKeyboardEl) return;
     mobileKeyboardEl.innerHTML = "";
@@ -168,19 +169,31 @@ function buildMobileKeyboard() {
             btn.style.borderLeft = `5px solid ${CHORD_LIBRARY[item.rootKey].color}`;
         }
 
-        // Pakai touchstart biar di HP ga delay pencetannya mase
+        // Pakai touchstart biar di HP super responsif tanpa delay mase
         btn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (!isSystemActive) return;
             initAudio();
 
-            // Lepas style aktif dari tombol lain yang sebelumnya ditekan
-            document.querySelectorAll('.mobile-chord-btn').forEach(b => b.classList.remove('active-press'));
-            btn.classList.add('active-press');
-
             let currentToken = item.rootKey + (item.isMinor ? "m" : "");
 
-            // SISTEM OTOMATIS PINDAH CHORD (AUTO-RELEASE ENGINE)
+            // REVISI FITUR: Jika tombol yang sama diklik lagi saat sedang aktif, matikan suaranya (Toggle Stop)
+            if (btn.classList.contains('active-press')) {
+                btn.classList.remove('active-press');
+                if (lastPlayedChordToken === currentToken) {
+                    stopChord(currentToken);
+                    lastPlayedChordToken = "";
+                }
+                return;
+            }
+
+            // Lepas style aktif dari tombol lain yang sebelumnya menyala
+            document.querySelectorAll('.mobile-chord-btn').forEach(b => b.classList.remove('active-press'));
+            
+            // Tandai tombol saat ini sebagai aktif
+            btn.classList.add('active-press');
+
+            // SISTEM OTOMATIS PINDAH CHORD (Jika ada chord lain yang bunyi, matikan dulu)
             if (lastPlayedChordToken && lastPlayedChordToken !== currentToken) {
                 stopChord(lastPlayedChordToken);
             }
