@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bikin Nada - Web App Area</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="btn-start" class="start-button">Mulai Sistem</button>
+
+    <div class="main-wrapper">
+        <div id="app-box" class="app-window hidden-app">
+            
+            <div class="main-layout-table">
+                <div class="layout-cell side-panel">
+                    <div class="panel-title">INSTRUMEN</div>
+                    <button class="sound-btn active" data-sound="piano" title="Piano / Synth Bell">
+                        <span class="emoji">🎹</span>
+                        <span class="label">Piano</span>
+                    </button>
+                    <button class="sound-btn" data-sound="guitar" title="Acoustic Guitar">
+                        <span class="emoji">🎸</span>
+                        <span class="label">Guitar</span>
+                    </button>
+                    <button class="sound-btn" data-sound="brass" title="Synth Brass">
+                        <span class="emoji">🎺</span>
+                        <span class="label">Brass</span>
+                    </button>
+                    <button class="sound-btn" data-sound="retro" title="Retro 8-Bit">
+                        <span class="emoji">👾</span>
+                        <span class="label">8-Bit</span>
+                    </button>
+                </div>
+                
+                <div class="layout-cell camera-cell">
+                    <div class="video-wrapper">
+                        <video id="webcam" autoplay playsinline></video>
+                        
+                        <div id="particle-container"></div>
+
+                        <div id="chord-display" class="chord-box hidden">
+                            <h1 id="chord-name">PLAYING: -</h1>
+                            <p class="tag-sub">Bass + Rhythm Active</p>
+                        </div>
+
+                        <canvas id="visualizer"></canvas>
+                    </div>
+
+                    <div id="mobile-keyboard" class="mobile-keyboard-container"></div>
+                </div>
+
+                <div class="layout-cell right-panel">
+                    <div class="panel-title">CHORD SHEET</div>
+                    <div class="sheet-box">
+                        <input type="file" id="image-uploader" accept="image/*" style="display: none;">
+                        <div id="upload-placeholder" class="placeholder-view">
+                            <span class="upload-icon">📸</span>
+                            <p>Upload Gambar Chord / Lirik</p>
+                            <button class="browse-btn">Pilih File</button>
+                        </div>
+                        <img id="sheet-preview" class="preview-img hidden" alt="Chord Sheet">
+                        <button id="btn-remove-sheet" class="remove-btn hidden">Ganti Gambar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-guide">
+        <p>Seer Imoed | Tekan Chord Sesuai Huruf Yang Dibunyikan |  Arrow Atas/Bawah untuk 7th Chord | M untuk Minor </p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
